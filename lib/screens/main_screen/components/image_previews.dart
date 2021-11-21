@@ -51,21 +51,23 @@ class _ImagePreview extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 200,
-              maxHeight: 200,
+          SizedBox(
+            width: 200,
+            height: 200,
+            child: FittedBox(
+              fit: BoxFit.fill,
+              child: Image.file(imageFile),
             ),
-            child: Image.file(imageFile),
           ),
           Positioned(
             right: 0,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: FloatingActionButton(
-                  backgroundColor: Colors.red,
-                  onPressed: onDelete,
-                  child: const Icon(Icons.delete)),
+                backgroundColor: Colors.red,
+                onPressed: onDelete,
+                child: const Icon(Icons.delete),
+              ),
             ),
           ),
         ],

@@ -1,8 +1,11 @@
+import 'package:file_sharing/components/command_button_icon.dart';
+import 'package:file_sharing/services/control_command_receiver.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'image_previews.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -52,63 +55,78 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        children: [
+          Row(
             children: [
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Share text',
-                  hintText: 'Enter some text and/or link to share',
-                ),
-                maxLines: 2,
-                onChanged: (String value) => setState(() {
-                  text = value;
-                }),
-              ),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Share object:',
-                  hintText: 'Enter subject to share (optional)',
-                ),
-                maxLines: 2,
-                onChanged: (String value) => setState(() {
-                  text = value;
-                }),
-              ),
-              ImagePreviews(imagePaths, onDelete: _onDeleteImage),
-              ListTile(
-                leading: const Icon(Icons.add),
-                title: const Text('Add image'),
-                onTap: () async {
-                  final imagePicker = ImagePicker();
-                  final pickedFile = await imagePicker.pickImage(
-                    source: ImageSource.gallery,
-                  );
-                  if (pickedFile != null) {
-                    setState(() {
-                      imagePaths.add(pickedFile.path);
-                    });
-                  }
-                },
-              ),
-              const Padding(padding: EdgeInsets.only(top: 12.0)),
-              Builder(
-                builder: (BuildContext context) {
-                  return ElevatedButton(
-                    onPressed: text.isEmpty && imagePaths.isEmpty
-                        ? null
-                        : () => _onShare(context),
-                    child: const Text('Share'),
-                  );
-                },
-              ),
+              CommandButtonIcon(
+                  onPressed: () =>
+                      context.read<ControlCommandReceiver>().backwardLeft(),
+                  icon: Icon(Icons.arrow_right),
+                  label: 'forward left'),
             ],
-          ),
-        ),
+          )
+        ],
       ),
     );
+    // return Container(
+    //   child: SingleChildScrollView(
+    //     child: Padding(
+    //       padding: EdgeInsets.all(24.0),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           TextField(
+    //             decoration: const InputDecoration(
+    //               labelText: 'Share text',
+    //               hintText: 'Enter some text and/or link to share',
+    //             ),
+    //             maxLines: 2,
+    //             onChanged: (String value) => setState(() {
+    //               text = value;
+    //             }),
+    //           ),
+    //           TextField(
+    //             decoration: const InputDecoration(
+    //               labelText: 'Share object:',
+    //               hintText: 'Enter subject to share (optional)',
+    //             ),
+    //             maxLines: 2,
+    //             onChanged: (String value) => setState(() {
+    //               text = value;
+    //             }),
+    //           ),
+    //           ImagePreviews(imagePaths, onDelete: _onDeleteImage),
+    //           ListTile(
+    //             leading: const Icon(Icons.add),
+    //             title: const Text('Add image'),
+    //             onTap: () async {
+    //               final imagePicker = ImagePicker();
+    //               final pickedFile = await imagePicker.pickImage(
+    //                 source: ImageSource.gallery,
+    //               );
+    //               if (pickedFile != null) {
+    //                 setState(() {
+    //                   imagePaths.add(pickedFile.path);
+    //                 });
+    //               }
+    //             },
+    //           ),
+    //           const Padding(padding: EdgeInsets.only(top: 12.0)),
+    //           Builder(
+    //             builder: (BuildContext context) {
+    //               return ElevatedButton(
+    //                 onPressed: text.isEmpty && imagePaths.isEmpty
+    //                     ? null
+    //                     : () => _onShare(context),
+    //                 child: const Text('Share'),
+    //               );
+    //             },
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
