@@ -58,12 +58,22 @@ class _BodyState extends State<Body> {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CommandButtonIcon(
-                  onPressed: () =>
-                      context.read<ControlCommandReceiver>().backwardLeft(),
-                  icon: Icon(Icons.arrow_right),
-                  label: 'forward left'),
+                onPressed: () =>
+                    context.read<ControlCommandReceiver>().backwardLeft(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+              CommandButtonIcon(
+                onPressed: () =>
+                    context.read<ControlCommandReceiver>().backwardLeft(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
             ],
           )
         ],

@@ -17,7 +17,15 @@ class ControlCommandReceiver extends ChangeNotifier {
 
   ControlCommandReceiver({required this.robotLocation});
 
-  void backwardLeft() {
+  bool loading = false;
+
+  void updateLoading() {
+    loading = !loading;
+    notifyListeners();
+  }
+
+  Future<void> backwardLeft() async {
+    updateLoading();
     // Matrix4 matrix = Matrix4.identity().getRotation()
     Matrix2 matrix = Matrix2.rotation(pi * 1 / 3);
     print('matrix $matrix');
@@ -27,6 +35,8 @@ class ControlCommandReceiver extends ChangeNotifier {
 
     Matrix2.solve(matrix, a, b);
     print('result: ${b.toString()}');
+    await Future.delayed(Duration(seconds: 1));
+    updateLoading();
 
     notifyListeners();
   }
