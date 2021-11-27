@@ -1,10 +1,8 @@
 import 'package:file_sharing/components/command_button_icon.dart';
 import 'package:file_sharing/services/control_command_receiver.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'image_previews.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
@@ -20,6 +18,12 @@ class _BodyState extends State<Body> {
 
   //subject
   String subject = '';
+  TextEditingController _newMediaLinkAddressController =
+      TextEditingController();
+  TextEditingController _newMediaLinkAddressController1 =
+      TextEditingController();
+  TextEditingController _newMediaLinkAddressController2 =
+      TextEditingController();
 
   // imagePaths
   List<String> imagePaths = [];
@@ -52,6 +56,60 @@ class _BodyState extends State<Body> {
     }
   }
 
+  void showBottomSheet() {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+      // backgroundColor: Colors.,
+      context: context,
+      // isScrollControlled: true,
+      enableDrag: true,
+      builder: (context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 150,
+              child: ListView(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text('Enter your address',
+                        style: Theme.of(context).textTheme.bodyText1),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(hintText: 'adddrss'),
+                    autofocus: true,
+                    controller: _newMediaLinkAddressController,
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    decoration: InputDecoration(hintText: 'adddrss'),
+                    autofocus: true,
+                    controller: _newMediaLinkAddressController1,
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    decoration: InputDecoration(hintText: 'adddrss'),
+                    autofocus: true,
+                    controller: _newMediaLinkAddressController2,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,6 +121,24 @@ class _BodyState extends State<Body> {
               CommandButtonIcon(
                 onPressed: () =>
                     context.read<ControlCommandReceiver>().backwardLeft(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+              CommandButtonIcon(
+                onPressed: () =>
+                    context.read<ControlCommandReceiver>().backwardLeft(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CommandButtonIcon(
+                onPressed: () => showBottomSheet(),
                 icon: Icon(Icons.arrow_right),
                 label: 'forward left',
                 isLoading: context.watch<ControlCommandReceiver>().loading,
