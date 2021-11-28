@@ -38,7 +38,9 @@ dependencies:
   image_picker: ^0.8.4
   sliding_up_panel: ^2.0.0+1
   modal_bottom_sheet: ^2.0.0
+  badges: ^2.0.1
   provider:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
