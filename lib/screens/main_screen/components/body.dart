@@ -1,11 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:file_sharing/components/command_button_icon.dart';
 import 'package:file_sharing/components/custom_outline_icon_buttton.dart';
 import 'package:file_sharing/services/control_command_receiver.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:badges/badges.dart';
-
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -33,7 +32,7 @@ class _BodyState extends State<Body> {
   FocusNode mediaFocus1 = FocusNode(canRequestFocus: false);
   FocusNode mediaFocus2 = FocusNode(canRequestFocus: false);
   FocusNode mediaFocus3 = FocusNode(canRequestFocus: false);
-  int count = 0;
+  int count = 1000;
 
   // imagePaths
   List<String> imagePaths = [];
@@ -252,11 +251,108 @@ class _BodyState extends State<Body> {
     );
   }
 
+  bool isShow = true;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       child: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text('Information Status',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    IconButton(
+                        icon: isShow
+                            ? Icon(Icons.arrow_drop_up_outlined)
+                            : Icon(Icons.arrow_drop_down_outlined),
+                        onPressed: () {
+                          setState(() {
+                            isShow = !isShow;
+                          });
+                        }),
+                    UnconstrainedBox(
+                      child: Badge(
+                        padding: EdgeInsets.all(7),
+                        animationType: BadgeAnimationType.scale,
+                        showBadge: count != 0,
+                        badgeColor: Theme.of(context).backgroundColor,
+                        badgeContent: Text('$count',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(color: Colors.white)),
+                        child: CommandButtonIcon(
+                          onPressed: () {},
+                          icon: Icon(Icons.view_list),
+                          label: 'View saved station',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+          AnimatedCrossFade(
+            duration: Duration(milliseconds: 250),
+            crossFadeState:
+                isShow ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+            secondChild: Container(),
+            firstChild: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Container(
+                decoration: ShapeDecoration(
+                  color: Colors.grey[200],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                  ),
+                ),
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < 10; i++)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text('Name',
+                                style: Theme.of(context).textTheme.headline6),
+                            Text('Name',
+                                style: Theme.of(context).textTheme.headline6)
+                          ],
+                        ),
+                      UnconstrainedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: CommandButtonIcon(
+                            edgeInsets: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            onPressed: () {
+                              setState(() {
+                                count++;
+                              });
+                            },
+                            icon: Icon(Icons.save),
+                            label: 'Save Information',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
           Column(
             children: <Widget>[
               TextField(
@@ -347,31 +443,72 @@ class _BodyState extends State<Body> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CommandButtonIcon(
-                onPressed: () {
-                  setState(() {
-                    count++;
-                  });
-                },
+                onPressed: () => showBottomSheet(),
                 icon: Icon(Icons.arrow_right),
                 label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
               ),
-              Badge(
-                padding: EdgeInsets.all(7),
-                animationType: BadgeAnimationType.scale,
-                showBadge: true,
-                badgeColor: Theme.of(context).backgroundColor,
-                badgeContent: Text('$count',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(color: Colors.white)),
-                child: CustomOutlinedIconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.arrow_right),
-                  label: 'View me',
-                ),
+              CommandButtonIcon(
+                onPressed: () => showBottomSheetSingleChildScrollView(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
               ),
             ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CommandButtonIcon(
+                onPressed: () => showBottomSheet(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+              CommandButtonIcon(
+                onPressed: () => showBottomSheetSingleChildScrollView(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CommandButtonIcon(
+                onPressed: () => showBottomSheet(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+              CommandButtonIcon(
+                onPressed: () => showBottomSheetSingleChildScrollView(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CommandButtonIcon(
+                onPressed: () => showBottomSheet(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+              CommandButtonIcon(
+                onPressed: () => showBottomSheetSingleChildScrollView(),
+                icon: Icon(Icons.arrow_right),
+                label: 'forward left',
+                isLoading: context.watch<ControlCommandReceiver>().loading,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 100,
           )
         ],
       ),

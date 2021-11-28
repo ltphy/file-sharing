@@ -5,13 +5,14 @@ class CommandButtonIcon extends StatelessWidget {
   final Icon icon;
   final String label;
   final bool isLoading;
-
+  final EdgeInsets? edgeInsets;
   const CommandButtonIcon({
     Key? key,
     required this.onPressed,
     required this.icon,
     required this.label,
     this.isLoading = false,
+    this.edgeInsets,
   }) : super(key: key);
 
   @override
@@ -35,27 +36,22 @@ class CommandButtonIcon extends StatelessWidget {
         ),
         alignment: Alignment.center,
         elevation: 5,
+        padding:edgeInsets,
       ),
-      icon: SizedBox(
-        width: 50,
-        child: isLoading
-            ? const Center(
-                child: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    // backgroundColor: Colors.green,
-                    color: Colors.purple,
-                    strokeWidth: 5,
-                  ),
+      icon: isLoading
+          ? const Center(
+              child: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  // backgroundColor: Colors.green,
+                  color: Colors.purple,
+                  strokeWidth: 5,
                 ),
-              )
-            : icon,
-      ),
-      label: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [Text(label, style: Theme.of(context).textTheme.bodyText1)],
-      ),
+              ),
+            )
+          : icon,
+      label: Text(label, style: Theme.of(context).textTheme.bodyText1),
     );
   }
 }
