@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:badges/badges.dart';
 import 'package:file_sharing/components/command_button_icon.dart';
 import 'package:file_sharing/components/custom_outline_icon_buttton.dart';
+import 'package:file_sharing/constants/constants.dart';
 import 'package:file_sharing/services/control_command_receiver.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -170,6 +174,10 @@ class _BodyState extends State<Body> {
     );
   }
 
+  Future<void> saveToStorage() async {
+
+  }
+
   void showBottomSheet() {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -229,7 +237,7 @@ class _BodyState extends State<Body> {
                   CommandButtonIcon(
                     onPressed: () {},
                     icon: Icon(Icons.arrow_right),
-                    label: 'forward left',
+                    label: 'Save to storage',
                     isLoading: false,
                   ),
                   // Expanded(
@@ -336,7 +344,8 @@ class _BodyState extends State<Body> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 16),
                           child: CommandButtonIcon(
-                            edgeInsets: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            edgeInsets: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 12),
                             onPressed: () {
                               setState(() {
                                 count++;

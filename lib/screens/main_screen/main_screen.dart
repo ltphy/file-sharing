@@ -1,5 +1,6 @@
 import 'package:file_sharing/services/control_command_receiver.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -22,7 +23,10 @@ class _MainScreenState extends State<MainScreen> {
       providers: [
         ChangeNotifierProvider<ControlCommandReceiver>(
             create: (BuildContext context) {
-          return ControlCommandReceiver(robotLocation: RobotLocation());
+          return ControlCommandReceiver(
+              robotLocation: RobotLocation(),
+              flutterSecureStorage:
+                  Provider.of<FlutterSecureStorage>(context, listen: false));
         }),
       ],
       child: Scaffold(

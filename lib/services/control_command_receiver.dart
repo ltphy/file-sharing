@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:file_sharing/constants/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 class RobotLocation {
@@ -14,8 +17,10 @@ class RobotLocation {
 
 class ControlCommandReceiver extends ChangeNotifier {
   final RobotLocation robotLocation;
+  final FlutterSecureStorage flutterSecureStorage;
 
-  ControlCommandReceiver({required this.robotLocation});
+  ControlCommandReceiver(
+      {required this.robotLocation, required this.flutterSecureStorage});
 
   bool loading = false;
 
@@ -36,12 +41,20 @@ class ControlCommandReceiver extends ChangeNotifier {
     Matrix2.solve(matrix, a, b);
     print('result: ${b.toString()}');
     await Future.delayed(Duration(seconds: 1));
+    await saveData();
     updateLoading();
 
     notifyListeners();
   }
 
-  void backwardRight() {}
+  Future<void> saveData() async {
+    List<RobotLocation> robotLocations = [RobotLocation()];
+    Timer.periodic(Duration(seconds: 1), (timer) async {
+      robotLocations.add(RobotLocation());
+      print('here');
+      await flutterSecureStorage.write(key: storageKey, value: 'haha');
+    });
+  }
 
   void backward() {}
 
