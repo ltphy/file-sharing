@@ -1,4 +1,5 @@
 import 'package:file_sharing/services/control_command_receiver.dart';
+import 'package:file_sharing/services/file_picker_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,10 @@ class _MainScreenState extends State<MainScreen> {
               flutterSecureStorage:
                   Provider.of<FlutterSecureStorage>(context, listen: false));
         }),
+        ChangeNotifierProvider<FilePickerService>(
+            create: (BuildContext context) {
+          return FilePickerService();
+        })
       ],
       child: Scaffold(
         appBar: AppBar(title: const Text('File Sharing ')),

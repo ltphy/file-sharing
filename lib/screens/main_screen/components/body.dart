@@ -5,6 +5,7 @@ import 'package:file_sharing/components/command_button_icon.dart';
 import 'package:file_sharing/components/custom_outline_icon_buttton.dart';
 import 'package:file_sharing/constants/constants.dart';
 import 'package:file_sharing/services/control_command_receiver.dart';
+import 'package:file_sharing/services/file_picker_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -174,9 +175,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<void> saveToStorage() async {
-
-  }
+  Future<void> saveToStorage() async {}
 
   void showBottomSheet() {
     showModalBottomSheet(
@@ -261,6 +260,11 @@ class _BodyState extends State<Body> {
 
   bool isShow = true;
 
+  Future<void> getFiles() async {
+    final contents = await context.read<FilePickerService>().getSingleFile();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -301,7 +305,7 @@ class _BodyState extends State<Body> {
                         child: CommandButtonIcon(
                           onPressed: () {},
                           icon: Icon(Icons.view_list),
-                          label: 'View saved station',
+                          label: 'View saved',
                         ),
                       ),
                     ),
@@ -416,25 +420,6 @@ class _BodyState extends State<Body> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CommandButtonIcon(
-                onPressed: () =>
-                    context.read<ControlCommandReceiver>().backwardLeft(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-              CommandButtonIcon(
-                onPressed: () =>
-                    context.read<ControlCommandReceiver>().backwardLeft(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CommandButtonIcon(
                 onPressed: () => showBottomSheet(),
                 icon: Icon(Icons.arrow_right),
                 label: 'forward left',
@@ -452,66 +437,9 @@ class _BodyState extends State<Body> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CommandButtonIcon(
-                onPressed: () => showBottomSheet(),
+                onPressed: () => getFiles(),
                 icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-              CommandButtonIcon(
-                onPressed: () => showBottomSheetSingleChildScrollView(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CommandButtonIcon(
-                onPressed: () => showBottomSheet(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-              CommandButtonIcon(
-                onPressed: () => showBottomSheetSingleChildScrollView(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CommandButtonIcon(
-                onPressed: () => showBottomSheet(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-              CommandButtonIcon(
-                onPressed: () => showBottomSheetSingleChildScrollView(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CommandButtonIcon(
-                onPressed: () => showBottomSheet(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
-                isLoading: context.watch<ControlCommandReceiver>().loading,
-              ),
-              CommandButtonIcon(
-                onPressed: () => showBottomSheetSingleChildScrollView(),
-                icon: Icon(Icons.arrow_right),
-                label: 'forward left',
+                label: 'get file picker',
                 isLoading: context.watch<ControlCommandReceiver>().loading,
               ),
             ],
